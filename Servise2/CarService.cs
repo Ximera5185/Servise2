@@ -100,7 +100,8 @@ namespace Servise2
                 _warehouse.Show();
 
                 sparePartIndex = GetUserNumber("Введите номер детали со склада для замены") - 1;
-
+                // сделать доп проверку для отказа от ремонта
+                //реализовать второе доп меню
                 if (_warehouse.TryGetPart(sparePartIndex, out SparePart newPart) == false)
                 {
                     Console.WriteLine("Такой деталинет");
@@ -165,9 +166,10 @@ namespace Servise2
                     }
                 }*/
 
+            }
+
                 Console.WriteLine("Обслуживание машины завершено");
                 Console.ReadKey();
-            }
 
         }
           private int GetUserNumber(string message)
