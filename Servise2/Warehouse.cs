@@ -27,11 +27,13 @@ namespace Servise2
             Console.WriteLine();
         }
 
-        public bool TryGetParts(int index, out SparePart part)
+        public bool TryGetPart(int index, out SparePart part)
         {
             if (_parts.Count >= index)
             {
                 part = _parts [index];
+
+                _parts.Remove(part);
 
                 return true;
             }

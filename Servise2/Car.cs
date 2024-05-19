@@ -9,6 +9,7 @@ namespace Servise2
     internal class Car
     {
         private List<SparePart> _brokenParts = new List<SparePart>();
+        private List<SparePart> _newParts = new List<SparePart>();
 
         public Car(string name)
         {
@@ -36,6 +37,18 @@ namespace Servise2
             }
         }
 
+        public bool HaveBrokenPart(string partName)
+        {
+            foreach (SparePart part in _brokenParts)
+            {
+                if (part.Name == partName)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
         public bool GetNamePart()
         {
             if (_brokenParts.Count == 0)
@@ -53,11 +66,25 @@ namespace Servise2
 
 
 
-        public void RemovePart(int index)
+        public void FixPart(SparePart newPart)
         {
-            _brokenParts.RemoveAt(index);
+            foreach (SparePart part in _brokenParts)
+            {
+                if (part.Name == newPart.Name)
+                {
+                    _brokenParts.Remove(part);
+
+                    AddPart(newPart);
+
+                    return;
+                }
+            }
         }
 
+        public void AddPart(SparePart newPart)
+        {
+            _newParts.Add(newPart);
+        }
         private void AddBrokenParts()
         {
             Database dataBase = new Database();

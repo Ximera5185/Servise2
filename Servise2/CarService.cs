@@ -85,7 +85,7 @@ namespace Servise2
             SparePart partWarehouse;
 
             int inputUserPartCar;
-            int inputUserPartWarehouse;
+            int sparePartIndex;
             int pricePart;
 
             while (car.BrokenPartsCount > 0)
@@ -99,6 +99,30 @@ namespace Servise2
                 
                 _warehouse.Show();
 
+                sparePartIndex = GetUserNumber("Введите номер детали со склада для замены") - 1;
+
+                if (_warehouse.TryGetPart(sparePartIndex, out SparePart newPart) == false)
+                {
+                    Console.WriteLine("Такой деталинет");
+
+                    continue;
+                }
+
+                if (car.HaveBrokenPart(newPart.Name))
+                {
+                    car.FixPart(newPart);
+
+                    Console.WriteLine("Деталь заменили");
+                }
+                else
+                {
+                    car.AddPart(newPart);
+
+                    Console.WriteLine("Попытка заменить целую деталь, автосервис выплатил штрав");
+                    // выплата штрафа
+                }
+
+                
                 /*int inputUser = GetUserNumber("Введите порядковый номер детали для ремонта") - 1;
 
                 if (_warehouse.GetParts(car.GetNamePart(inputUser)))
@@ -145,7 +169,8 @@ namespace Servise2
                 Console.ReadKey();
             }
 
-            int GetUserNumber(string message)
+        }
+          private int GetUserNumber(string message)
             {
                 int number = 0;
 
@@ -162,6 +187,5 @@ namespace Servise2
 
                 return number;
             }
-        }
     }
 }
