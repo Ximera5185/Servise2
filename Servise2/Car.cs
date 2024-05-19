@@ -19,7 +19,7 @@ namespace Servise2
             AddBrokenParts();
         }
 
-        public int Count => _brokenParts.Count;
+        public int BrokenPartsCount => _brokenParts.Count;
 
         public static int InstanceCounter { get; private set; }
 

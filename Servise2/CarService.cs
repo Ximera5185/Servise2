@@ -88,7 +88,7 @@ namespace Servise2
             int inputUserPartWarehouse;
             int pricePart;
 
-            while (car.Count > 0)
+            while (car.BrokenPartsCount > 0)
             {
                 Console.Clear();
                 Console.WriteLine($"Баланс автосервиса {_cashier}");
@@ -96,9 +96,10 @@ namespace Servise2
                 car.ShowBrokenParts();
 
                 Console.WriteLine();
+                
+                _warehouse.Show();
 
-<<<<<<< HEAD
-                int inputUser = GetUserNumber("Введите порядковый номер детали для ремонта") - 1;
+                /*int inputUser = GetUserNumber("Введите порядковый номер детали для ремонта") - 1;
 
                 if (_warehouse.GetParts(car.GetNamePart(inputUser)))
                 {
@@ -138,13 +139,13 @@ namespace Servise2
                         Console.WriteLine("Подходящей детали на складе нет");
                         Console.ReadKey();
                     }
-                }
+                }*/
 
                 Console.WriteLine("Обслуживание машины завершено");
                 Console.ReadKey();
             }
 
-            private int GetUserNumber(string message)
+            int GetUserNumber(string message)
             {
                 int number = 0;
 
