@@ -29,7 +29,7 @@ namespace Servise2
 
         public bool TryGetPart(int index, out SparePart part)
         {
-            if (_parts.Count >= index)
+            if (index >= 0 && index< _parts.Count)
             {
                 part = _parts [index];
 
