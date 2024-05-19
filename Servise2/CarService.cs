@@ -25,7 +25,6 @@ namespace Servise2
             RunSelectMenu();
         }
 
-
         private void RunSelectMenu()
         {
             const string ServCarMenu = "1";
