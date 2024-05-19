@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Servise2
 {
-    internal class Program
+    internal class CreatorCar
     {
-        static void Main(string [] args)
+        public Car Create()
         {
-            CarService carService = new CarService();
+            return new Car("Машина");
         }
     }
 }
