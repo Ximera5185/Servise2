@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Servise2
 {
@@ -68,25 +65,20 @@ namespace Servise2
 
         private void Work()
         {
-            int monetaryReward = 100;
-            int fine = 100;
 
             while (_cars.Count > 0)
             {
                 Car car = _cars.Dequeue();
 
-                ServCar(fine, monetaryReward, car);
+                ServCar(car);
             }
         }
 
-        private void ServCar(int fine, int monetaryReward, Car car)
+        private void ServCar( Car car)
         {
-            SparePart partCar;
-            SparePart partWarehouse;
-
-            int inputUserPartCar;
+            int monetaryReward = 100;
+            int fine = 100;
             int sparePartIndex;
-            int pricePart;
 
             while (car.BrokenPartsCount > 0)
             {
@@ -96,7 +88,7 @@ namespace Servise2
                 car.ShowBrokenParts();
 
                 Console.WriteLine();
-                
+
                 _warehouse.Show();
 
                 sparePartIndex = GetUserNumber("Введите номер детали со склада для замены") - 1;
@@ -104,8 +96,8 @@ namespace Servise2
                 //реализовать второе доп меню
                 if (_warehouse.TryGetPart(sparePartIndex, out SparePart newPart) == false)
                 {
-                    Console.WriteLine("Такой деталинет");
-
+                    Console.WriteLine("Такой детали нет");
+                    
                     continue;
                 }
 
@@ -113,81 +105,40 @@ namespace Servise2
                 {
                     car.FixPart(newPart);
 
+                    _cashier += monetaryReward;
+
                     Console.WriteLine("Деталь заменили");
                 }
                 else
                 {
                     car.AddPart(newPart);
 
+                    _cashier -= fine;
+
                     Console.WriteLine("Попытка заменить целую деталь, автосервис выплатил штрав");
                     // выплата штрафа
                 }
-
-                
-                /*int inputUser = GetUserNumber("Введите порядковый номер детали для ремонта") - 1;
-
-                if (_warehouse.GetParts(car.GetNamePart(inputUser)))
-                {
-                    car.RemovePart(inputUser);
-
-=======
-                 inputUserPartCar = GetUserNumber("Введите порядковый номер детали для ремонта") - 1;
-
-                partCar = car.GetPart(inputUserPartCar);
->>>>>>> 1
-                    _warehouse.Show();
-
-                    inputUserPartWarehouse = GetUserNumber("Введите порядковый номер детали со склада") - 1;
-
-
-                    if (_warehouse.TryGetParts(inputUserPartWarehouse, out partWarehouse))
-                    {
-
-                        if (partCar == partWarehouse)
-                        {
-                            car.RemovePart(inputUserPartCar);
-                            Database.RemovePart(inputUserPartWarehouse);
-
-                            Console.WriteLine("Заменили деталь");
-                            Console.ReadKey();
-                        }
-                        else
-                        {
-                            Console.WriteLine("Деталь не совподает, заменили сломанную");
-                            Console.ReadKey();
-                        }
-                    }
-                    else
-                    {
-                        _cashier -= fine;
-
-                        Console.WriteLine("Подходящей детали на складе нет");
-                        Console.ReadKey();
-                    }
-                }*/
-
             }
 
-                Console.WriteLine("Обслуживание машины завершено");
-                Console.ReadKey();
-
+            Console.WriteLine("Обслуживание машины завершено");
+            Console.ReadKey();
         }
-          private int GetUserNumber(string message)
+        private int GetUserNumber(string message)
+        {
+            int number = 0;
+
+            string input = "";
+
+            while (int.TryParse(input, out number) == false)
             {
-                int number = 0;
+                Console.WriteLine(message);
 
-                string input = "";
+                input = Console.ReadLine();
 
-                while (int.TryParse(input, out number) == false)
-                {
-                    Console.WriteLine(message);
-
-                    input = Console.ReadLine();
-
-                    Console.WriteLine("Вы ввели не целое число.");
-                }
-
-                return number;
+                Console.WriteLine("Вы ввели не целое число.");
             }
+
+            return number;
+        }
     }
 }
