@@ -80,7 +80,7 @@ namespace Servise2
             int fine = 100;
             int sparePartIndex;
 
-            while (car.BrokenPartsCount > 0)
+            while (car.BrokenPartsCount > 0 && true)
             {
                 Console.Clear();
                 Console.WriteLine($"Баланс автосервиса {_cashier}");
