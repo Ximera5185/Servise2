@@ -78,9 +78,11 @@ namespace Servise2
         {
             int monetaryReward = 100;
             int fine = 100;
-            int sparePartIndex;
+            int sparePartIndex = 0;
 
-            while (car.BrokenPartsCount > 0 && true)
+            bool isRepairs = true;
+
+            while (car.BrokenPartsCount > 0 && isRepairs)
             {
                 Console.Clear();
                 Console.WriteLine($"Баланс автосервиса {_cashier}");
@@ -91,9 +93,26 @@ namespace Servise2
 
                 _warehouse.Show();
 
-                sparePartIndex = GetUserNumber("Введите номер детали со склада для замены") - 1;
+                string userInput = Console.ReadLine();
+
+                switch (userInput)
+                {
+                    case "1":
+                        
+                         sparePartIndex = GetUserNumber("Введите номер детали со склада для замены") - 1;
+                        break;
+                    case "2":
+                        isRepairs = false;
+                        break;
+                }
                 // сделать доп проверку для отказа от ремонта
                 //реализовать второе доп меню
+
+                if (userInput.ToLower() == "exit")
+                {
+                    break;
+                }
+
                 if (_warehouse.TryGetPart(sparePartIndex, out SparePart newPart) == false)
                 {
                     Console.WriteLine("Такой детали нет");
