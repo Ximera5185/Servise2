@@ -113,7 +113,6 @@ namespace Servise2
                         Console.WriteLine("Вы не чего не выбрали, нажмите Enter и попробуйте сново");
                         Console.ReadKey();
                         break;
-
                 }
 
                 if (_isRepairs == false)
@@ -139,7 +138,6 @@ namespace Servise2
                 else
                 {
                     car.AddPart(newPart);
-
 
                     Console.WriteLine("Попытка заменить целую деталь");
                     Console.ReadKey();
