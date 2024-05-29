@@ -46,6 +46,7 @@ namespace Servise2
 
             return false;
         }
+
         public bool GetNamePart()
         {
             if (_brokenParts.Count == 0)
@@ -60,8 +61,6 @@ namespace Servise2
         {
             return _brokenParts [index];
         }
-
-
 
         public void FixPart(SparePart newPart)
         {
@@ -82,6 +81,7 @@ namespace Servise2
         {
             _newParts.Add(newPart);
         }
+
         private void AddBrokenParts()
         {
             Database dataBase = new Database();

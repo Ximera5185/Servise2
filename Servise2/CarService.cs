@@ -14,8 +14,8 @@ namespace Servise2
         private int _cashier;
 
         private bool _isRepairs = true;
+        private bool _isProgrammWork = true;
 
-        private  bool _isProgrammWork = true;
         public CarService()
         {
             _cashier = 0;
@@ -29,7 +29,6 @@ namespace Servise2
         {
             const string ServCarMenu = "1";
             const string ExitProgrammMenu = "2";
-
 
             string inputUser;
 
@@ -48,6 +47,7 @@ namespace Servise2
                     case ServCarMenu:
                         Work();
                         break;
+
                     case ExitProgrammMenu:
                         _isProgrammWork = false;
                         break;
@@ -77,10 +77,11 @@ namespace Servise2
 
         private void ServCar(Car car)
         {
-            int monetaryReward = 100;
-            int fine = 100;
-            int sparePartIndex = 0;
+            const string partSelection = "1";
+            const string giviUp = "2";
 
+            int monetaryReward = 100;
+            int sparePartIndex = 0;
 
             while (car.BrokenPartsCount > 0 && _isRepairs)
             {
@@ -93,30 +94,30 @@ namespace Servise2
 
                 _warehouse.Show();
 
-                Console.WriteLine("Для выбора детали введите 1 " +
-                "Для выхода из этого меню введите 2");
+                Console.WriteLine($"Для выбора детали введите {partSelection} " +
+                $"Для отказа от ремонта  {giviUp}");
 
                 string userInput = Console.ReadLine();
 
                 switch (userInput)
                 {
-                    case "1":
-                        sparePartIndex = GetUserNumber("Введите номер детали со склада для замены") -1;
+                    case partSelection:
+                        sparePartIndex = GetUserNumber("Введите номер детали со склада для замены") - 1;
                         break;
-                    case "2":
-                        _isRepairs = false;
+
+                    case giviUp:
+                        GiveUp();
                         break;
-                        default :
+
+                    default:
                         Console.WriteLine("Вы не чего не выбрали, нажмите Enter и попробуйте сново");
                         Console.ReadKey();
                         break;
-                        
+
                 }
 
                 if (_isRepairs == false)
                 {
-                    _isProgrammWork = false;
-
                     break;
                 }
 
@@ -139,16 +140,23 @@ namespace Servise2
                 {
                     car.AddPart(newPart);
 
-                    //_cashier -= fine;
 
                     Console.WriteLine("Попытка заменить целую деталь");
                     Console.ReadKey();
-                    // выплата штрафа
                 }
             }
 
             Console.WriteLine("Обслуживание машины завершено");
             Console.ReadKey();
+        }
+
+        private void GiveUp()
+        {
+            int fine = 100;
+
+            _isRepairs = false;
+
+            _cashier += fine;
         }
 
         private int GetUserNumber(string message)
