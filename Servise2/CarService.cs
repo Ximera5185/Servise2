@@ -13,6 +13,9 @@ namespace Servise2
 
         private int _cashier;
 
+        private bool _isRepairs = true;
+
+        private  bool _isProgrammWork = true;
         public CarService()
         {
             _cashier = 0;
@@ -27,11 +30,10 @@ namespace Servise2
             const string ServCarMenu = "1";
             const string ExitProgrammMenu = "2";
 
-            bool isProgrammWork = true;
 
             string inputUser;
 
-            while (isProgrammWork)
+            while (_isProgrammWork)
             {
                 Console.Clear();
                 Console.WriteLine($"Баланс автосервиса {_cashier}");
@@ -47,7 +49,7 @@ namespace Servise2
                         Work();
                         break;
                     case ExitProgrammMenu:
-                        isProgrammWork = false;
+                        _isProgrammWork = false;
                         break;
                 }
             }
@@ -65,8 +67,7 @@ namespace Servise2
 
         private void Work()
         {
-
-            while (_cars.Count > 0)
+            while (_cars.Count > 0 && _isRepairs)
             {
                 Car car = _cars.Dequeue();
 
@@ -74,15 +75,14 @@ namespace Servise2
             }
         }
 
-        private void ServCar( Car car)
+        private void ServCar(Car car)
         {
             int monetaryReward = 100;
             int fine = 100;
             int sparePartIndex = 0;
 
-            bool isRepairs = true;
 
-            while (car.BrokenPartsCount > 0 && isRepairs)
+            while (car.BrokenPartsCount > 0 && _isRepairs)
             {
                 Console.Clear();
                 Console.WriteLine($"Баланс автосервиса {_cashier}");
@@ -93,30 +93,37 @@ namespace Servise2
 
                 _warehouse.Show();
 
+                Console.WriteLine("Для выбора детали введите 1 " +
+                "Для выхода из этого меню введите 2");
+
                 string userInput = Console.ReadLine();
 
                 switch (userInput)
                 {
                     case "1":
-                        
-                         sparePartIndex = GetUserNumber("Введите номер детали со склада для замены") - 1;
+                        sparePartIndex = GetUserNumber("Введите номер детали со склада для замены") -1;
                         break;
                     case "2":
-                        isRepairs = false;
+                        _isRepairs = false;
                         break;
+                        default :
+                        Console.WriteLine("Вы не чего не выбрали, нажмите Enter и попробуйте сново");
+                        Console.ReadKey();
+                        break;
+                        
                 }
-                // сделать доп проверку для отказа от ремонта
-                //реализовать второе доп меню
 
-                if (userInput.ToLower() == "exit")
+                if (_isRepairs == false)
                 {
+                    _isProgrammWork = false;
+
                     break;
                 }
 
                 if (_warehouse.TryGetPart(sparePartIndex, out SparePart newPart) == false)
                 {
                     Console.WriteLine("Такой детали нет");
-                    
+
                     continue;
                 }
 
@@ -132,9 +139,10 @@ namespace Servise2
                 {
                     car.AddPart(newPart);
 
-                    _cashier -= fine;
+                    //_cashier -= fine;
 
-                    Console.WriteLine("Попытка заменить целую деталь, автосервис выплатил штрав");
+                    Console.WriteLine("Попытка заменить целую деталь");
+                    Console.ReadKey();
                     // выплата штрафа
                 }
             }
@@ -142,9 +150,10 @@ namespace Servise2
             Console.WriteLine("Обслуживание машины завершено");
             Console.ReadKey();
         }
+
         private int GetUserNumber(string message)
         {
-            int number = 0;
+            int number;
 
             string input = "";
 

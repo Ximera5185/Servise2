@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Servise2
 {
@@ -29,7 +26,7 @@ namespace Servise2
 
         public bool TryGetPart(int index, out SparePart part)
         {
-            if (index >= 0 && index< _parts.Count)
+            if (index >= 0 && index < _parts.Count)
             {
                 part = _parts [index];
 
