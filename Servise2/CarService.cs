@@ -77,8 +77,8 @@ namespace Servise2
 
         private void ServCar(Car car)
         {
-            const string partSelection = "1";
-            const string giviUp = "2";
+            const string PartSelection = "1";
+            const string GiviUp = "2";
 
             int monetaryReward = 100;
             int sparePartIndex = 0;
@@ -94,19 +94,19 @@ namespace Servise2
 
                 _warehouse.Show();
 
-                Console.WriteLine($"Для выбора детали введите {partSelection} " +
-                $"Для отказа от ремонта  {giviUp}");
+                Console.WriteLine($"Для выбора детали введите {PartSelection} " +
+                $"Для отказа от ремонта  {GiviUp}");
 
                 string userInput = Console.ReadLine();
 
                 switch (userInput)
                 {
-                    case partSelection:
+                    case PartSelection:
                         sparePartIndex = GetUserNumber("Введите номер детали со склада для замены") - 1;
                         break;
 
-                    case giviUp:
-                        GiveUp();
+                    case GiviUp:
+                        this.GiveUp();
                         break;
 
                     default:
@@ -131,7 +131,7 @@ namespace Servise2
                 {
                     car.FixPart(newPart);
 
-                    _cashier += monetaryReward;
+                    _cashier += newPart.Price + monetaryReward;
 
                     Console.WriteLine("Деталь заменили");
                 }
@@ -154,7 +154,7 @@ namespace Servise2
 
             _isRepairs = false;
 
-            _cashier += fine;
+            _cashier -= fine;
         }
 
         private int GetUserNumber(string message)
